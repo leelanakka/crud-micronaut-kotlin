@@ -14,6 +14,6 @@ open class MovieRepositry(@param:CurrentSession @field:PersistenceContext privat
     open fun findById(imdbId: String) = manager.find(Movie::class.java, imdbId)
 
     @Transactional(readOnly = true)
-    open fun findAll() = manager.createQuery("from Movie", Movie::class.java).resultList as List<Movie>
+    open fun findAll() = manager.createQuery("from Movie", Movie::class.java).resultList
 
 }

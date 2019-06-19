@@ -8,12 +8,17 @@ import javax.inject.Inject
 
 @Controller("/movie")
 open class MovieController {
-
     @Inject
     lateinit var repository: MovieRepositry
 
     @Get
     fun findAll(): List<Movie> {
         return repository.findAll()
+    }
+
+    @Get("/{id}")
+    fun findById(id: Int): Movie? {
+        println(id)
+        return repository.findById(id.toString())
     }
 }
