@@ -16,4 +16,9 @@ open class MovieRepositry(@param:CurrentSession @field:PersistenceContext privat
     @Transactional(readOnly = true)
     open fun findAll() = manager.createQuery("from Movie", Movie::class.java).resultList
 
+    @Transactional
+    open fun addMovie(movie: Movie): Movie {
+        manager.persist(movie)
+        return movie
+    }
 }
