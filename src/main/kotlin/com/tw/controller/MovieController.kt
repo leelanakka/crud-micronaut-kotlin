@@ -5,7 +5,6 @@ import com.tw.domain.MovieView
 import com.tw.service.MovieService
 import com.tw.service.NoMovieFoundException
 import io.micronaut.http.HttpResponse
-import io.micronaut.http.HttpStatus
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.*
 
