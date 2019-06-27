@@ -1,31 +1,36 @@
 package com.tw.controller
 
 import com.tw.domain.Movie
-import com.tw.repositry.MovieRepositry
-import io.micronaut.http.annotation.Body
-import io.micronaut.http.annotation.Controller
-import io.micronaut.http.annotation.Get
-import io.micronaut.http.annotation.Post
-import javax.inject.Inject
+import com.tw.domain.MovieView
+import com.tw.service.MovieService
+import com.tw.service.NoMovieFoundException
+import io.micronaut.http.HttpResponse
+import io.micronaut.http.HttpStatus
+import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.*
 
 @Controller("/movie")
-open class MovieController {
-    @Inject
-    lateinit var repository: MovieRepositry
+open class MovieController(private val movieService: MovieService) {
+
 
     @Get
     fun findAll(): List<Movie> {
-        return repository.findAll()
+        return this.movieService.findAll()
     }
 
     @Post("/")
     fun addMovie(@Body movie: Movie): Movie {
-        return repository.addMovie(movie)
+        return this.movieService.addMovie(movie)
     }
 
     @Get("/{id}")
-    fun findById(id: Int): Movie? {
-        println(id)
-        return repository.findById(id.toString())
+    @Produces(value = [MediaType.APPLICATION_JSON])
+    fun findById(id: Int): MovieView {
+        return this.movieService.findById(id.toString()).toMovieView()
+    }
+
+    @Error(exception = NoMovieFoundException::class)
+    fun handleNoStoryFound(): HttpResponse<String> {
+        return HttpResponse.notFound()
     }
 }

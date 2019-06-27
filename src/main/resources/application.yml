@@ -19,6 +19,8 @@ datasources:
     password: ''
 jpa:
   default:
+    packages-to-scan:
+      - 'com.tw.domain'
     properties:
       hibernate:
         hbm2ddl:
@@ -27,4 +29,3 @@ liquibase:
   datasources:
     default:
       change-log: 'classpath:db/liquibase-changelog.xml'
-
